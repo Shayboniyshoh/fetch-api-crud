@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS v5.2.0-beta1 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./style/style.css">
+</head>
+
+<body class="bg-dark">
+    <h1 class="title text-center bg-secondary text-light p-4">Fetch Api Sandbox</h1>
+
+    <div class="container">
+        <div class="row" id="container">
+            <div class="buttons my-4 text-center">
+                <button class="btn btn-outline-danger m-2 w-25" id="getText">Get Text</button>
+                <button class="btn btn-outline-warning m-2 w-25" id="getJson">Get Users</button>
+                <button class="btn btn-outline-success m-2 w-25" id="getPost">Get Posts</button>
+            </div>
+            <form class="m-auto form" id="form">
+                <div class="mb-3">
+                    <input type="text" class="form-control bg-dark py-2 text-light" id="title" placeholder="Title">
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control bg-dark py-2 text-light" id="body" rows="3"
+                        placeholder="Message..."></textarea>
+                </div>
+                <input class="btn btn-outline-secondary" type="submit" value="Submit">
+            </form>
+            <p class="text text-light" id="text"></p>
+        </div>
+    </div>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="./js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
