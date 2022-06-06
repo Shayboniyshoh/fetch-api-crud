@@ -1,5 +1,6 @@
 const getText = document.getElementById('getText');
-const getJson = document.getElementById('getJson');
+const getUsers = document.getElementById('getUsers');
+const getPosts = document.getElementById('getPosts');
 const getPost = document.getElementById('getPost');
 const form = document.getElementById('form');
 
@@ -7,10 +8,11 @@ const text = document.getElementById('text');
 const container = document.getElementById('container');
 
 getText.addEventListener('click', getTextFile);
-getJson.addEventListener('click', getJsonUsers);
-getPost.addEventListener('click', getPosts);
-form.addEventListener('submit', addPosts);
-form.addEventListener('submit', editPosts);
+getUsers.addEventListener('click', getJsonUsers);
+getPosts.addEventListener('click', getAllPosts);
+getPost.addEventListener('click', getSinglePost);
+form.addEventListener('submit', addNewPost);
+form.addEventListener('submit', editPost);
 
 function getTextFile() {
     fetch('../file/sample.txt')
@@ -34,23 +36,24 @@ function getJsonUsers() {
         })
         .catch(err => console.log(err));
 };
-function getPosts() {
+function getAllPosts() {
     fetch('https://jsonplaceholder.typicode.com/posts/')
         .then(res => res.json())
         .then(data => {
             data.forEach(todo => {
                 container.innerHTML += `
                     <div class="card col-6 p-4 bg-dark shadow-lg">
-                    <p class="text-light">${todo.id}</p>
-                    <h3 class="text-light">${todo.title}</h3>
-                    <p class="text-light">${todo.body}</p>
+                    <p class="text-light">Id: ${todo.id}</p>
+                    <h3 class="text-light">Title: <br>${todo.title}</h3>
+                    <p class="text-light">Description:<br>${todo.body}</p>
+                    <p class="text-light">User Id: ${todo.userId}</p>
                     </div>
-                `
+                    `
             })
         })
         .catch(err => console.log(err));
 };
-function addPosts(e) {
+function addNewPost(e) {
     e.preventDefault();
     const title = document.getElementById('title').value;
     const body = document.getElementById('body').value;
@@ -67,14 +70,15 @@ function addPosts(e) {
         .then(data => {
             container.innerHTML += `
                 <div class="card col-6 p-4 bg-dark shadow-lg">
-                <p class="text-light">${data.id}</p>
-                <h3 class="text-light">${data.title}</h3>
-                <p class="text-light">${data.body}</p>
+                <p class="text-light">Id: ${data.id}</p>
+                <h3 class="text-light">Title: <br>${data.title}</h3>
+                <p class="text-light">Description:<br>${data.body}</p>
+                <p class="text-light">User Id: ${data.userId}</p>
                 </div>
                 `
         }).catch(err => console.log(err));
 }
-function editPosts(e) {
+function editPost(e) {
     e.preventDefault();
     const title = document.getElementById('title').value;
     const body = document.getElementById('body').value;
@@ -85,19 +89,39 @@ function editPosts(e) {
         headers: {
             'Content-type': 'application/json'
         },
-        body: JSON.stringify({ id: 1, title: title, body: body }),
+        body: JSON.stringify({ id: 1, title: title, body: body, userId: 1 }),
+    })
+        .then(res => res.json())
+        .then(data => {
+            container.innerHTML += `
+            <div class="card col-6 p-4 bg-dark shadow-lg">
+            <p class="text-light">Id: ${data.id}</p>
+            <h3 class="text-light">Title: <br>${data.title}</h3>
+            <p class="text-light">Description:<br>${data.body}</p>
+            <p class="text-light">User Id: ${data.userId}</p>
+            </div>
+            `
+        }).catch(err => console.log(err));
+}
+function getSinglePost() {
+    fetch('https://jsonplaceholder.typicode.com/posts/1', {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        headers: { 'Content-type': 'application/json' },
     })
         .then(res => res.json())
         .then(data => {
             container.innerHTML += `
                 <div class="card col-6 p-4 bg-dark shadow-lg">
-                <p class="text-light">${data.id}</p>
-                <h3 class="text-light">${data.title}</h3>
-                <p class="text-light">${data.body}</p>
+                <p class="text-light">Id: ${data.id}</p>
+                <h3 class="text-light">Title: <br>${data.title}</h3>
+                <p class="text-light">Description:<br>${data.body}</p>
+                <p class="text-light">User Id: ${data.userId}</p>
                 </div>
-                `,
-                console.log(data);
-        }).catch(err => console.log(err));
+                `
+        })
+        .catch(err => console.log(err));
 }
 
 
