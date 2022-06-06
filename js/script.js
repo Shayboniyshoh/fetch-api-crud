@@ -9,7 +9,8 @@ const container = document.getElementById('container');
 getText.addEventListener('click', getTextFile);
 getJson.addEventListener('click', getJsonUsers);
 getPost.addEventListener('click', getPosts);
-form.addEventListener('submit', postPosts);
+form.addEventListener('submit', addPosts);
+form.addEventListener('submit', editPosts);
 
 function getTextFile() {
     fetch('../file/sample.txt')
@@ -49,8 +50,7 @@ function getPosts() {
         })
         .catch(err => console.log(err));
 };
-
-function postPosts(e) {
+function addPosts(e) {
     e.preventDefault();
     const title = document.getElementById('title').value;
     const body = document.getElementById('body').value;
@@ -72,6 +72,31 @@ function postPosts(e) {
                 <p class="text-light">${data.body}</p>
                 </div>
                 `
+        }).catch(err => console.log(err));
+}
+function editPosts(e) {
+    e.preventDefault();
+    const title = document.getElementById('title').value;
+    const body = document.getElementById('body').value;
+    fetch('https://jsonplaceholder.typicode.com/posts/1', {
+        method: 'PUT',
+        mode: 'cors',
+        cache: 'no-cache',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify({ id: 1, title: title, body: body }),
+    })
+        .then(res => res.json())
+        .then(data => {
+            container.innerHTML += `
+                <div class="card col-6 p-4 bg-dark shadow-lg">
+                <p class="text-light">${data.id}</p>
+                <h3 class="text-light">${data.title}</h3>
+                <p class="text-light">${data.body}</p>
+                </div>
+                `,
+                console.log(data);
         }).catch(err => console.log(err));
 }
 
