@@ -2,6 +2,7 @@ const getText = document.getElementById('getText');
 const getUsers = document.getElementById('getUsers');
 const getPosts = document.getElementById('getPosts');
 const getPost = document.getElementById('getPost');
+const deletePost = document.getElementById('deletePost');
 const form = document.getElementById('form');
 
 const text = document.getElementById('text');
@@ -11,6 +12,7 @@ getText.addEventListener('click', getTextFile);
 getUsers.addEventListener('click', getJsonUsers);
 getPosts.addEventListener('click', getAllPosts);
 getPost.addEventListener('click', getSinglePost);
+deletePost.addEventListener('click', deleteSinglePost);
 form.addEventListener('submit', addNewPost);
 form.addEventListener('submit', editPost);
 
@@ -120,6 +122,22 @@ function getSinglePost() {
                 <p class="text-light">User Id: ${data.userId}</p>
                 </div>
                 `
+        })
+        .catch(err => console.log(err));
+}
+function deleteSinglePost() {
+    fetch('https://jsonplaceholder.typicode.com/posts/1', {
+        method: 'DELETE',
+        mode: 'cors',
+        cache: 'no-cache',
+        headers: { 'Content-type': 'application/json' },
+    })
+        .then(res => {
+            if (res.status === 200) {
+                container.innerHTML += `
+                <h3 class="text-light bg-success p-3 my-3">Data Removed Successfully!</h3>
+                `
+            }
         })
         .catch(err => console.log(err));
 }
